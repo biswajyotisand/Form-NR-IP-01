@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #1f2a3a;
+  --ink-soft: #5a6473;
+  --navy: #1f3350;
+  --navy-deep: #122238;
+  --brass: #9c7b2e;
+  --line: #c7ccd3;
+  --panel: #f6f5f0;
+  --red: #8a2b2b;
+}
+
+body {
+  margin: 0;
+  background-color: #f1f5f9;
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom fonts styling */
+.font-source-serif {
+  font-family: 'Source Serif 4', Georgia, serif;
+}
+
+.font-plex-mono {
+  font-family: 'IBM Plex Mono', Menlo, Monaco, Consolas, monospace;
+}
+
+.font-plex-sans {
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+/* Sheet and table borders */
+.railway-sheet {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  box-shadow: 0 4px 20px rgba(18, 34, 56, 0.08);
+}
+
+.svc-table td, .svc-table th,
+.fam-table td, .fam-table th,
+.calc-table td {
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 4px 8px;
+  font-size: 11px;
+  vertical-align: middle;
+}
+
+.svc-table td:last-child, .svc-table th:last-child,
+.fam-table td:last-child, .fam-table th:last-child,
+.calc-table td:last-child {
+  border-right: none;
+}
+
+.svc-table th, .fam-table th {
+  background: var(--panel);
+  text-transform: uppercase;
+  font-size: 9px;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+  text-align: left;
+  font-weight: 600;
+}
+
+.readout-cell {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  color: var(--navy-deep);
+  background: rgba(31, 51, 80, 0.04);
+}
+
+/* Print specifications for strict single A4 page fit */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 4mm 5mm;
+  }
+  
+  html, body {
+    background: #ffffff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    height: auto !important;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+  
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .railway-sheet {
+    box-shadow: none !important;
+    border: 1px solid #334155 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+  
+  .sheet-grid-container {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Compact table cells for strict 1 A4 page */
+  .svc-table td, .svc-table th,
+  .fam-table td, .fam-table th,
+  .calc-table td {
+    padding: 1.8px 4px !important;
+    font-size: 8.5px !important;
+    line-height: 1.15 !important;
+  }
+
+  .svc-table th, .fam-table th {
+    font-size: 7.5px !important;
+    padding: 1.5px 4px !important;
+  }
+
+  .readout-cell {
+    font-size: 8.5px !important;
+  }
+
+  input, select {
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 9px !important;
+    box-shadow: none !important;
+  }
+
+  .dcrg-container-print {
+    box-shadow: none !important;
+    border: 1px solid #718096 !important;
+    page-break-inside: avoid;
+  }
+}

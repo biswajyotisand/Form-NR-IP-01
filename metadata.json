@@ -1,0 +1,6 @@
+{
+  "name": "NR Case & DCRG Calculator - Kharagpur Workshop",
+  "description": "Integrated Indian Railways I-Pass Data Sheet (Form NR-IP-01) with live Death-cum-Retirement Gratuity (DCRG) calculation and detailed assessment.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
