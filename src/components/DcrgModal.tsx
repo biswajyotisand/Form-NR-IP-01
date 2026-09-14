@@ -185,7 +185,7 @@ export const DcrgModal: React.FC<DcrgModalProps> = ({
         {/* Footer */}
         <div className="flex items-center justify-between border-t border-slate-200 bg-slate-50 px-5 py-3">
           <span className="text-[11px] text-slate-500 italic">
-            Prepared for Kharagpur Workshop · Staff Section
+            Prepared for Kharagpur Workshop · Settlement Section
           </span>
           <button
             type="button"

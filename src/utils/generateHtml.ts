@@ -204,19 +204,31 @@ export function generateStandaloneHtml(data: IPassFormData, calc: CalculationRes
       border-bottom: 1px solid #cbd5e1;
     }
 
+    /* 4-column info grid for Top Section */
+    .info-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid #cbd5e1;
+    }
+
     .info-cell {
       padding: 3px 6px;
       border-bottom: 1px solid #e2e8f0;
       border-right: 1px solid #e2e8f0;
     }
 
-    .info-cell:nth-child(2n) {
+    .info-grid .info-cell:nth-child(2n),
+    .info-grid-4 .info-cell:nth-child(4n) {
       border-right: none;
     }
 
-    .info-cell.full-span {
+    .info-cell.full-span,
+    .info-cell.span-2 {
       grid-column: span 2;
-      border-right: none;
+    }
+
+    .info-cell.span-3 {
+      grid-column: span 3;
     }
 
     .cell-label {
@@ -247,6 +259,22 @@ export function generateStandaloneHtml(data: IPassFormData, calc: CalculationRes
       padding: 2.5px 5px;
       font-size: 9px;
       vertical-align: middle;
+    }
+
+    .fam-table th, .fam-table td {
+      padding: 2px 5px;
+      font-size: 9px;
+    }
+
+    .svc-table td, .svc-table th,
+    .calc-table td {
+      padding: 3.5px 6px;
+      font-size: 10px;
+    }
+
+    .svc-table th {
+      font-size: 8.5px;
+      padding: 2.5px 6px;
     }
 
     th:last-child, td:last-child {
@@ -340,10 +368,33 @@ export function generateStandaloneHtml(data: IPassFormData, calc: CalculationRes
         grid-template-columns: 1fr 1fr !important;
       }
 
-      th, td {
-        padding: 2px 4px !important;
+      /* Family table compact to fit 5-6 family members cleanly on single A4 */
+      .fam-table th, .fam-table td {
+        padding: 1.8px 4px !important;
         font-size: 8.5px !important;
         line-height: 1.15 !important;
+      }
+
+      .fam-table th {
+        font-size: 7.5px !important;
+        padding: 1.2px 4px !important;
+      }
+
+      /* Service Details & Calculation table: slightly increased row height & font size */
+      .svc-table td, .svc-table th,
+      .calc-table td {
+        padding: 3.4px 6px !important;
+        font-size: 9.8px !important;
+        line-height: 1.25 !important;
+      }
+
+      .svc-table th {
+        font-size: 8.5px !important;
+        padding: 2.5px 6px !important;
+      }
+
+      .readout {
+        font-size: 9.8px !important;
       }
 
       .cell-val {
@@ -351,7 +402,7 @@ export function generateStandaloneHtml(data: IPassFormData, calc: CalculationRes
       }
 
       .signature-row {
-        padding-top: 20px !important;
+        padding-top: 18px !important;
         padding-bottom: 4px !important;
       }
     }
@@ -380,7 +431,7 @@ export function generateStandaloneHtml(data: IPassFormData, calc: CalculationRes
     <div class="sheet-header">
       <div>
         <h1 class="sheet-title">NR Case — I-Pass Data Sheet</h1>
-        <p class="sheet-subtitle">Staff Section, Kharagpur Workshop</p>
+        <p class="sheet-subtitle">Settlement Section, Kharagpur Workshop</p>
       </div>
       <div class="sheet-month">
         <span>Month:</span>
@@ -388,51 +439,99 @@ export function generateStandaloneHtml(data: IPassFormData, calc: CalculationRes
       </div>
     </div>
 
-    <!-- 2-Column Grid -->
+    <!-- 1. TOP SECTION: Employee Information & Bank Details (Full Width) -->
+    <div class="section-head">Employee Information &amp; Bank Details</div>
+    <div class="info-grid-4">
+      <div class="info-cell">
+        <div class="cell-label">Name</div>
+        <div class="cell-val">${escapeHtml(data.empName)}</div>
+      </div>
+      <div class="info-cell">
+        <div class="cell-label">Designation</div>
+        <div class="cell-val">${escapeHtml(data.designation)}</div>
+      </div>
+      <div class="info-cell">
+        <div class="cell-label">Father's Name</div>
+        <div class="cell-val">${escapeHtml(data.fatherName)}</div>
+      </div>
+      <div class="info-cell">
+        <div class="cell-label">B.U. No.</div>
+        <div class="cell-val">${escapeHtml(data.buNo)}</div>
+      </div>
+      <div class="info-cell">
+        <div class="cell-label">PF No. / Emp No.</div>
+        <div class="cell-val">${escapeHtml(data.pfNo)}</div>
+      </div>
+      <div class="info-cell">
+        <div class="cell-label">T. No.</div>
+        <div class="cell-val">${escapeHtml(data.tNo)}</div>
+      </div>
+      <div class="info-cell span-2">
+        <div class="cell-label">Address</div>
+        <div class="cell-val">${escapeHtml(data.address)}</div>
+      </div>
+      <div class="info-cell span-2">
+        <div class="cell-label">Identification Marks</div>
+        <div class="cell-val">${escapeHtml(data.idMarks)}</div>
+      </div>
+      <div class="info-cell">
+        <div class="cell-label">Bank Name</div>
+        <div class="cell-val">${escapeHtml(data.bankName)}</div>
+      </div>
+      <div class="info-cell">
+        <div class="cell-label">Branch</div>
+        <div class="cell-val">${escapeHtml(data.branch)}</div>
+      </div>
+      <div class="info-cell span-2">
+        <div class="cell-label">Account No.</div>
+        <div class="cell-val">${escapeHtml(data.accNo)}</div>
+      </div>
+      <div class="info-cell span-2">
+        <div class="cell-label">IFSC Code</div>
+        <div class="cell-val">${escapeHtml(data.ifsc)}</div>
+      </div>
+    </div>
+
+    <!-- 2. MIDDLE SECTION: Family Composition & Quarter & Medical Details (Full Width) -->
+    <div class="section-head">Family Composition &amp; Quarter &amp; Medical Details</div>
+    <table class="fam-table">
+      <thead>
+        <tr>
+          <th style="width:28px; text-align:center;">Srl</th>
+          <th>Name</th>
+          <th>Relation</th>
+          <th>DOB</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${familyRows || '<tr><td colspan="4" style="text-align:center; color:#94a3b8;">No family recorded</td></tr>'}
+      </tbody>
+    </table>
+
+    <!-- Railway Quarter & Medical Option -->
+    <div class="info-grid-4">
+      <div class="info-cell">
+        <div class="cell-label">Railway Quarter</div>
+        <div class="cell-val">${escapeHtml(data.quarter)}</div>
+      </div>
+      <div class="info-cell ${data.quarter === 'Yes' && data.quarterDetail ? '' : 'span-3'}">
+        <div class="cell-label">Medical Allowance Option</div>
+        <div class="cell-val">${escapeHtml(data.medical)}</div>
+      </div>
+      ${data.quarter === 'Yes' && data.quarterDetail ? `
+      <div class="info-cell span-2" style="background:#f0fdf4;">
+        <div class="cell-label">Quarter No. &amp; Address</div>
+        <div class="cell-val">${escapeHtml(data.quarterDetail)}</div>
+      </div>
+      ` : ''}
+    </div>
+
+    <!-- 3. BELOW SECTION: 2 Columns - Service Details (LEFT) & Calculation (RIGHT) -->
     <div class="sheet-grid">
-      <!-- LEFT COLUMN -->
+      <!-- LEFT COLUMN: Service Details -->
       <div class="grid-col-left">
-
-        <!-- Employee Information -->
-        <div class="section-head">Employee Information</div>
-        <div class="info-grid">
-          <div class="info-cell">
-            <div class="cell-label">Name</div>
-            <div class="cell-val">${escapeHtml(data.empName)}</div>
-          </div>
-          <div class="info-cell">
-            <div class="cell-label">Designation</div>
-            <div class="cell-val">${escapeHtml(data.designation)}</div>
-          </div>
-          <div class="info-cell">
-            <div class="cell-label">Father's Name</div>
-            <div class="cell-val">${escapeHtml(data.fatherName)}</div>
-          </div>
-          <div class="info-cell">
-            <div class="cell-label">B.U. No.</div>
-            <div class="cell-val">${escapeHtml(data.buNo)}</div>
-          </div>
-          <div class="info-cell">
-            <div class="cell-label">PF No. / Emp No.</div>
-            <div class="cell-val">${escapeHtml(data.pfNo)}</div>
-          </div>
-          <div class="info-cell">
-            <div class="cell-label">T. No.</div>
-            <div class="cell-val">${escapeHtml(data.tNo)}</div>
-          </div>
-          <div class="info-cell full-span">
-            <div class="cell-label">Address</div>
-            <div class="cell-val">${escapeHtml(data.address)}</div>
-          </div>
-          <div class="info-cell full-span">
-            <div class="cell-label">Identification Marks</div>
-            <div class="cell-val">${escapeHtml(data.idMarks)}</div>
-          </div>
-        </div>
-
-        <!-- Service Details -->
         <div class="section-head">Service Details</div>
-        <table>
+        <table class="svc-table">
           <thead>
             <tr>
               <th style="width:20px; text-align:center;">Sl</th>
@@ -503,73 +602,15 @@ export function generateStandaloneHtml(data: IPassFormData, calc: CalculationRes
             </tr>
           </tbody>
         </table>
-
       </div>
 
-      <!-- RIGHT COLUMN -->
+      <!-- RIGHT COLUMN: Calculation -->
       <div class="grid-col-right">
-
-        <!-- Bank Details -->
-        <div class="section-head">Bank Details</div>
-        <div class="info-grid">
-          <div class="info-cell">
-            <div class="cell-label">Bank Name</div>
-            <div class="cell-val">${escapeHtml(data.bankName)}</div>
-          </div>
-          <div class="info-cell">
-            <div class="cell-label">Branch</div>
-            <div class="cell-val">${escapeHtml(data.branch)}</div>
-          </div>
-          <div class="info-cell">
-            <div class="cell-label">Account No.</div>
-            <div class="cell-val">${escapeHtml(data.accNo)}</div>
-          </div>
-          <div class="info-cell">
-            <div class="cell-label">IFSC Code</div>
-            <div class="cell-val">${escapeHtml(data.ifsc)}</div>
-          </div>
-        </div>
-
-        <!-- Family Composition & Allowances -->
-        <div class="section-head">Family Composition &amp; Allowances</div>
-        <table>
-          <thead>
-            <tr>
-              <th style="width:20px; text-align:center;">Srl</th>
-              <th>Name</th>
-              <th>Relation</th>
-              <th>DOB</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${familyRows || '<tr><td colspan="4" style="text-align:center; color:#94a3b8;">No family recorded</td></tr>'}
-          </tbody>
-        </table>
-
-        <!-- Railway Quarter & Medical Option -->
-        <div class="info-grid" style="border-top:1px solid #cbd5e1;">
-          <div class="info-cell">
-            <div class="cell-label">Railway Quarter</div>
-            <div class="cell-val">${escapeHtml(data.quarter)}</div>
-          </div>
-          <div class="info-cell">
-            <div class="cell-label">Medical Allowance Option</div>
-            <div class="cell-val">${escapeHtml(data.medical)}</div>
-          </div>
-          ${data.quarter === 'Yes' && data.quarterDetail ? `
-          <div class="info-cell full-span" style="background:#f0fdf4;">
-            <div class="cell-label">Quarter No. &amp; Address</div>
-            <div class="cell-val">${escapeHtml(data.quarterDetail)}</div>
-          </div>
-          ` : ''}
-        </div>
-
-        <!-- Calculation (Staff Settlement) -->
         <div class="section-head">
           <span>Calculation</span>
-          <span style="font-family:monospace; font-size:8px; font-weight:normal; color:#cbd5e1;">Staff Settlement</span>
+          <span style="font-family:monospace; font-size:8px; font-weight:normal; color:#cbd5e1;">Settlement Section</span>
         </div>
-        <table>
+        <table class="calc-table">
           <tbody>
             <tr>
               <td style="width:20px; text-align:center; font-family:monospace; color:#64748b;">1</td>
@@ -604,11 +645,10 @@ export function generateStandaloneHtml(data: IPassFormData, calc: CalculationRes
             <tr>
               <td style="width:20px; text-align:center; font-family:monospace; color:#64748b;">7</td>
               <td>GIS (Group – "D" 1990, Group – "C" 2003)</td>
-              <td class="readout">${gisFormatted || '₹ ' + (Number(data.gis) || 0).toLocaleString('en-IN')}</td>
+              <td class="readout">${Number(data.gis) > 0 ? '₹ ' + Number(data.gis).toLocaleString('en-IN') : '0'}</td>
             </tr>
           </tbody>
         </table>
-
       </div>
     </div>
 

@@ -211,7 +211,7 @@ export default function App() {
                 </span>
               </div>
               <p className="text-[11px] text-slate-300">
-                Staff Section · Kharagpur Workshop · Indian Railways
+                Settlement Section · Kharagpur Workshop · Indian Railways
               </p>
             </div>
           </div>
